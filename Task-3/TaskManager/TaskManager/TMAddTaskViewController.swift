@@ -8,14 +8,36 @@
 
 import UIKit
 
-class TMAddTaskViewController: UIViewController {
+protocol TMAddTaskViewControllerDelegate {
+    func taskAdded(task: TMTask)
+}
 
+class TMAddTaskViewController: UIViewController {
+    
+    var delegate: TMAddTaskViewControllerDelegate?
+    
+    @IBOutlet weak var taskNameTextBox: UITextField!
+    
+    @IBAction func addTaskButtonClicked(_ sender: UIBarButtonItem) {
+        if let taskName = taskNameTextBox.text{
+            if taskName != ""{
+                let task = TMTask(name: taskName)
+                delegate?.taskAdded(task: task)
+            }
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func cancelAddTaskButtonClicked(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

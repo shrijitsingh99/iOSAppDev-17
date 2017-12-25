@@ -8,9 +8,12 @@
 
 import UIKit
 
-class TMTableViewController: UITableViewController {
+class TMTableViewController: UITableViewController, TMAddTaskViewControllerDelegate {
     
-    var task: TMTask?
+    func taskAdded(task: TMTask) {
+        tasks.append(task)
+        self.tableView.reloadData()
+    }
     
     var tasks: [TMTask] = []
     
@@ -24,8 +27,6 @@ class TMTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         
-        let task = TMTask(name: "Hello, World!")
-        tasks.append(task)
         
     }
 
@@ -34,6 +35,11 @@ class TMTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? TMAddTaskViewController {
+            destination.delegate = self
+        }
+    }
     
     // MARK: - Table view data source
 
