@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class ViewController: UIViewController {
 
@@ -26,11 +27,13 @@ class ViewController: UIViewController {
     }
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        SVProgressHUD.show()
         if identifier == "showInfoTableViewController" {
             if userDetails[(userNameTextBox?.text)!] == passwordTextBox?.text {
                 return true
             }
             else {
+                SVProgressHUD.dismiss()
                 return false
             }
         }
